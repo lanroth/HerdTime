@@ -33,7 +33,7 @@ function AppRoutes() {
       <footer className="border-t py-6 text-center text-xs text-muted-foreground">
         HerdTime — free &amp; open source.{' '}
         <a
-          href="https://github.com/your-username/HerdTime"
+          href="https://github.com/lanroth/HerdTime"
           className="underline hover:text-foreground"
           target="_blank"
           rel="noopener noreferrer"

@@ -61,6 +61,9 @@ export function PollPage() {
 
   const sortedDates = [...poll.poll_dates].sort((a, b) => a.date.localeCompare(b.date))
 
+  const today = new Date().toISOString().slice(0, 10)
+  const isPastDeadline = !!poll.deadline && today > poll.deadline
+
   return (
     <div className="max-w-5xl mx-auto px-4 py-8 flex flex-col gap-6">
       {/* Header */}
@@ -78,8 +81,8 @@ export function PollPage() {
                   {sortedDates.length} date{sortedDates.length !== 1 ? 's' : ''}
                 </Badge>
                 {poll.deadline && (
-                  <Badge variant="outline">
-                    Closes {format(parseISO(poll.deadline), 'MMM d, yyyy')}
+                  <Badge variant={isPastDeadline ? 'destructive' : 'outline'}>
+                    {isPastDeadline ? 'Closed' : `Closes ${format(parseISO(poll.deadline), 'MMM d, yyyy')}`}
                   </Badge>
                 )}
               </div>
@@ -119,7 +122,7 @@ export function PollPage() {
             <CardTitle className="text-lg">
               {myParticipant ? 'Your response' : 'Add your response'}
             </CardTitle>
-            {myParticipant && !showVoteForm && (
+            {myParticipant && !showVoteForm && !isPastDeadline && (
               <Button variant="outline" size="sm" onClick={() => setShowVoteForm(true)}>
                 <Pencil className="mr-1.5 h-3.5 w-3.5" />
                 Edit
@@ -128,7 +131,11 @@ export function PollPage() {
           </div>
         </CardHeader>
         <CardContent>
-          {myParticipant && !showVoteForm ? (
+          {isPastDeadline ? (
+            <p className="text-sm text-muted-foreground">
+              This poll is closed — the deadline has passed and no new responses are accepted.
+            </p>
+          ) : myParticipant && !showVoteForm ? (
             <div className="text-sm text-muted-foreground">
               You responded as <span className="font-medium text-foreground">{myParticipant.name}</span>.
               {myParticipant.comment && (

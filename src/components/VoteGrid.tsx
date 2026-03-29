@@ -54,7 +54,7 @@ export function VoteGrid({ dates, participants }: VoteGridProps) {
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-sm">
+      <table className="text-sm">
         <thead>
           <tr>
             <th className="text-left font-medium text-muted-foreground pr-4 py-2 min-w-[120px]">
