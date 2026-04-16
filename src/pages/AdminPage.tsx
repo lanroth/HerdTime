@@ -39,7 +39,7 @@ export function AdminPage() {
 
   const isOwner = (user && poll?.creator_id === user.id) || !!adminToken
 
-  const shareUrl = `${window.location.origin}${window.location.pathname.replace('/admin', '')}`
+  const shareUrl = `${window.location.origin}${window.location.pathname}${window.location.hash.replace('/admin', '')}`
 
   const copyLink = async () => {
     await navigator.clipboard.writeText(shareUrl)
